@@ -15,3 +15,5 @@ Grapple still funky when using, but targeting system in place for grapple. Press
 Hold left mouse button to use grapple. Relase to release grapple.
 Character will fall infinitley if "falls" in a direction where there is nothing to land on. This can happen on moving to fast on a semi-flat or plane surface or when jumping and using the grapple. 
 characer can still walk on walls.
+
+to wall on walls, objects need to have layer "WallStick" and to make something the grapple will target to, add the script "Target In View" probably eaiser to add an empty object and place in the middle of branches. If add to art assets directly pivot point will be at the center of the asset and not sure how to move pivot point, which is where the grapple will target to. 
