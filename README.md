@@ -10,6 +10,7 @@ Wall walking does not work at the moment and is not implemented in this version.
 UPDATE
 March 25, 2021
 move using arrow keys or WASD.
+Spacebar to jump.  
 move camera with mouse.
 Grapple still funky when using, but targeting system in place for grapple. Press right mouse button to toggle the grapple on and off. Use press scroll wheel button to change targets. Program will crash when in targeting mode if change targets and move a target out of camera view. 
 Hold left mouse button to use grapple. Relase to release grapple.
