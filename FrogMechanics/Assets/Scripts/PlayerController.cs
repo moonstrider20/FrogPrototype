@@ -12,14 +12,14 @@ public class PlayerController : MonoBehaviour
 
     public Tongue tongue;
 
-    [HideInInspector]
+
     public WorldState States;
     private Transform Cam;
     private Transform CamY;
     private CameraFollow CamFol;
 
     private DetectCollision Colli;
-    [HideInInspector]
+
     public Rigidbody Rigid;
 
     float delta;
@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
         {
             SetGrounded();
             tongue.StopGrapple();
+            //Rigid.Sleep();
+            //Rigid.WakeUp();
         }
     }
 
@@ -196,8 +198,6 @@ public class PlayerController : MonoBehaviour
             HitDir += HitBack.normal;
         }
 
-        Debug.DrawLine(transform.position, transform.position + (HitDir.normalized * 5f), Color.red);
-
         return HitDir.normalized;
     }
 
@@ -290,8 +290,8 @@ public class PlayerController : MonoBehaviour
 
         Quaternion lookDir = Quaternion.LookRotation(targetDir);
 
-        Vector3 SetGroundDir = FloorAngleCheck();
-        GroundDir = Vector3.Lerp(GroundDir, SetGroundDir, d * GravityRotationSpeed);
+        //Vector3 SetGroundDir = FloorAngleCheck();
+        //GroundDir = Vector3.Lerp(GroundDir, SetGroundDir, d * GravityRotationSpeed);
 
         //lerp mesh slower when not on ground
         RotateSelf(GroundDir, d, GravityRotationSpeed);

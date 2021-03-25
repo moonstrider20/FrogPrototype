@@ -7,9 +7,15 @@ public class Tongue : MonoBehaviour
     private LineRenderer lr;
     private Vector3 grapplePoint;
     public LayerMask whatIsGrappleable;
-    public Transform tongueTip, thirdCamera, player;
-    private float maxDistance = 150f;
+    public Transform tongueTip;//, thirdCamera, 
+    public Transform player;
+    //private float maxDistance = 150f;
     private SpringJoint joint;
+
+    public Vector3 targetPos;
+    public bool targetInSight;
+
+    public TargetController TargetController;
 
     void Awake()
     {
@@ -36,9 +42,9 @@ public class Tongue : MonoBehaviour
 
     public void StartGrapple()
     {
-        RaycastHit hit;
+        //RaycastHit hit;
         Debug.Log("I stared grapple");
-        if (Physics.Raycast(thirdCamera.position, thirdCamera.forward, out hit, maxDistance, whatIsGrappleable))
+        /*if (Physics.Raycast(thirdCamera.position, thirdCamera.forward, out hit, maxDistance, whatIsGrappleable))
         {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -53,8 +59,31 @@ public class Tongue : MonoBehaviour
 
             lr.positionCount = 2;
             currentGrapplePosition = tongueTip.position;
-        }
+        }*/
+        if (targetInSight)
+        {
+            grapplePoint = targetPos;
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
 
+            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+
+            joint.spring = 3f;
+            joint.damper = 5f;
+            joint.massScale = 3f;
+
+            lr.positionCount = 2;
+            currentGrapplePosition = tongueTip.position;
+
+
+            //***********************************
+            TargetController.lockedOn = false;
+            TargetController.image.enabled = false;
+            TargetController.lockedTarget = 0;
+            TargetController.target = null;
+            //**********************************
+        }
         else Debug.Log("FALSE");
     }
 
