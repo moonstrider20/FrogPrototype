@@ -19,7 +19,7 @@ public class TargetInView : MonoBehaviour
     {
         Vector3 targetPosition = cam.WorldToViewportPoint(gameObject.transform.position);
 
-        bool onScreen = targetPosition.x > 0 && targetPosition.x < 1 && targetPosition.y > 0 && targetPosition.y < 1 && targetPosition.z > 0 && targetPosition.z < 100;//targetPosition.z > 0 && targetPosition.x > 0 && targetPosition.x < 1 && targetPosition.y > 0 && targetPosition.y < 1;
+        bool onScreen = targetPosition.x > 0 && targetPosition.x < 1 && targetPosition.y > 0 && targetPosition.y < 1 && targetPosition.z > 0 && targetPosition.z < 50;//targetPosition.z > 0 && targetPosition.x > 0 && targetPosition.x < 1 && targetPosition.y > 0 && targetPosition.y < 1;
 
         if (onScreen && addOnlyOnce)
         {

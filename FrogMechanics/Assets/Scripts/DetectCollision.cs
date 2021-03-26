@@ -21,12 +21,4 @@ public class DetectCollision : MonoBehaviour
 
         return false;
     }
-
-    /*void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Vector3 Pos = transform.position + (-transform.up * bottomOffset);
-        Gizmos.DrawSphere(Pos, collisionRadius);
-    }*/
 }

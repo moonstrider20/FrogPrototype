@@ -60,6 +60,7 @@ public class Tongue : MonoBehaviour
             lr.positionCount = 2;
             currentGrapplePosition = tongueTip.position;
         }*/
+        Debug.Log(targetInSight);
         if (targetInSight)
         {
             grapplePoint = targetPos;
@@ -83,8 +84,10 @@ public class Tongue : MonoBehaviour
             TargetController.lockedTarget = 0;
             TargetController.target = null;
             //**********************************
+
+            //Debug.Log("Line where you be?");
         }
-        else Debug.Log("FALSE");
+        //else Debug.Log("FALSE");
     }
 
     public void StopGrapple()

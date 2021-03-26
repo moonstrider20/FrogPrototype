@@ -63,16 +63,14 @@ public class TargetController : MonoBehaviour
                 target = nearByTargets[lockedTarget];
             }
         }
-
+        Debug.Log("lockedOn is " + lockedOn);
         if (lockedOn)
         {
             target = nearByTargets[lockedTarget];
             Tongue.targetInSight = true;
             gameObject.transform.position = cam.WorldToScreenPoint(target.transform.position);
-            Debug.Log(target.transform.position);
+            /*Debug.Log(target.transform.position);*/
             Tongue.targetPos = target.transform.position;
-
-            //gameObject.transform.Rotate(new Vector3(0, 0, -1));
         }
 
         else

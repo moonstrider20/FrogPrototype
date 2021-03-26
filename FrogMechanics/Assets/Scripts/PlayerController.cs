@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             SetInAir();
             tongue.StartGrapple();
+           // Debug.Log("I pressed the grapple button");
         }
 
         else if (Input.GetMouseButtonUp(0))
