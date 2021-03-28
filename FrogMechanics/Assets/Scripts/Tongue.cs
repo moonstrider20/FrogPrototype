@@ -16,6 +16,7 @@ public class Tongue : MonoBehaviour
     public bool targetInSight;
 
     public TargetController TargetController;
+    public PlayerController PlayerController;
 
     void Awake()
     {
@@ -43,7 +44,7 @@ public class Tongue : MonoBehaviour
     public void StartGrapple()
     {
         //RaycastHit hit;
-        Debug.Log("I stared grapple");
+        
         /*if (Physics.Raycast(thirdCamera.position, thirdCamera.forward, out hit, maxDistance, whatIsGrappleable))
         {
             grapplePoint = hit.point;
@@ -60,9 +61,9 @@ public class Tongue : MonoBehaviour
             lr.positionCount = 2;
             currentGrapplePosition = tongueTip.position;
         }*/
-        Debug.Log(targetInSight);
         if (targetInSight)
         {
+            PlayerController.grappeling = true;
             grapplePoint = targetPos;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
@@ -84,16 +85,15 @@ public class Tongue : MonoBehaviour
             TargetController.lockedTarget = 0;
             TargetController.target = null;
             //**********************************
-
-            //Debug.Log("Line where you be?");
         }
-        //else Debug.Log("FALSE");
     }
 
     public void StopGrapple()
     {
         lr.positionCount = 0;
         Destroy(joint);
+        PlayerController.grappeling = false;
+        PlayerController.transform.rotation = PlayerController.originalPosition;
     }
 
     private Vector3 currentGrapplePosition;

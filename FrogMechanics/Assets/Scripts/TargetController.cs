@@ -63,7 +63,7 @@ public class TargetController : MonoBehaviour
                 target = nearByTargets[lockedTarget];
             }
         }
-        Debug.Log("lockedOn is " + lockedOn);
+        
         if (lockedOn)
         {
             target = nearByTargets[lockedTarget];

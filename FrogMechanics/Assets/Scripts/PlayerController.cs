@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     public Tongue tongue;
 
+    public PlayerController Frog;
+
 
     public WorldState States;
     private Transform Cam;
@@ -23,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Rigid;
 
     float delta;
+    public bool grappeling = false;
+    public Quaternion originalPosition;
 
     [Header("Physics")]
     public Transform[] GroundChecks;
@@ -60,11 +64,28 @@ public class PlayerController : MonoBehaviour
         Rigid.transform.parent = null;
 
         Cursor.lockState = CursorLockMode.Locked;           //Keep cursor in the center, not wandering
+        originalPosition = Rigid.transform.rotation;
+    }
+
+    void Start()
+    {
+        Debug.Log("Original" + originalPosition);
+        Debug.Log("rotation" + Frog.transform.rotation);
     }
 
     private void Update()   //inputs
     {
-        transform.position = Rigid.position;
+        if (grappeling)
+        {
+            Rigid.position = transform.position;
+            SetInAir();
+            FallingCtrl(delta, Speed, Acceleration);
+        }
+        else
+        {
+            transform.position = Rigid.position;
+        }
+        //transform.position = Rigid.position;
 
         //check for jumping
         if (States == WorldState.Grounded)
@@ -84,17 +105,25 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            SetInAir();
+            //SetInAir();
             tongue.StartGrapple();
-           // Debug.Log("I pressed the grapple button");
         }
 
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) && grappeling)
         {
             SetGrounded();
             tongue.StopGrapple();
+            Debug.Log("about to leave grappeling " + Frog.transform.rotation);
+            transform.rotation = originalPosition;
+            Debug.Log("Left grappeling " + Frog.transform.rotation);
+            //SetGrounded();
+            //Quaternion rot = Rigid.rotation;
+            /*rot[0] = 0;
+            rot[2] = 0;
+            Rigid.rotation = rot;
+            //Rigid.transform.up;
             //Rigid.Sleep();
-            //Rigid.WakeUp();
+            //Rigid.WakeUp();*/
         }
     }
 

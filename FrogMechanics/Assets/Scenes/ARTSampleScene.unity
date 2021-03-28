@@ -1845,6 +1845,7 @@ MonoBehaviour:
   tongue: {fileID: 1336269301}
   States: 0
   Rigid: {fileID: 0}
+  grappeling: 0
   GroundChecks:
   - {fileID: 364046910}
   - {fileID: 1083532883}
@@ -6284,6 +6285,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   targetInSight: 0
   TargetController: {fileID: 1474228612}
+  PlayerController: {fileID: 0}
 --- !u!120 &1336269302
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -8810,10 +8812,18 @@ PrefabInstance:
       propertyPath: whatIsGrappleable.m_Bits
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 6841950724079840606, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
+      propertyPath: PlayerController
+      value: 
+      objectReference: {fileID: 2067900626}
     - target: {fileID: 6841950724316998116, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4a30d696594a8c34c9d226c9eebdb682, type: 2}
+    - target: {fileID: 6841950724316998118, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 6841950724316998119, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.05
@@ -9387,6 +9397,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aacee6e6d3939864bbb6e1f314e87ce0, type: 3}
   m_PrefabInstance: {fileID: 340923489}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2067900626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6841950722832144222, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
+  m_PrefabInstance: {fileID: 1889385738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a49c4ac5228464fb5a5a760fd46360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2078938148
 PrefabInstance:
   m_ObjectHideFlags: 0
