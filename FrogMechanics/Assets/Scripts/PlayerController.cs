@@ -10,6 +10,13 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         Grounded, //on ground
         InAir, //in the air
     }
+
+    [Header("Menu Stuff Here!")] //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    public static bool GameIsPaused = false;
+    public GameObject pauseMenuUI;
+    //public GameObject loseScreen;*/
+
+
     public PlayerInput input;
     public Vector2 motion;
 
@@ -127,9 +134,15 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         }
     }
 
+
+    //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     public void OnQuit(InputAction.CallbackContext context)
     {
-        Application.Quit();
+        Application.Quit(); //This is what happens right now. when (if) menus put in can comment out and enable the lines below
+        /*if (GameIsPaused)
+            Resume();
+        else
+            Pause();*/
     }
 
     //*******************************************************************************************************************************************************
@@ -380,5 +393,36 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     {
         Quaternion SlerpRot = Quaternion.LookRotation(LookDir, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, SlerpRot, spd * d);
+    }
+
+    //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //everything below is for dying and menus
+
+    void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Pause()
+    {
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Mist"))
+        {
+            /*loseScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;           //Unlock cursor
+            Cursor.visible = true;*/
+            Debug.Log("You DIED!!!");
+        }
     }
 }
