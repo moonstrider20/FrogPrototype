@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
     public enum WorldState
     {
         Grounded, //on ground
         InAir, //in the air
     }
+    public PlayerInput input;
+    public Vector2 motion;
+
+
 
     public Tongue tongue;
 
@@ -67,11 +72,67 @@ public class PlayerController : MonoBehaviour
         originalPosition = Rigid.transform.rotation;
     }
 
-    void Start()
+    //*******************************************************************************************************************************************************************
+    public void OnEnable()
     {
-        Debug.Log("Original" + originalPosition);
-        Debug.Log("rotation" + Frog.transform.rotation);
+        if (input == null)
+        {
+            input = new PlayerInput();
+
+            input.Player.SetCallbacks(this);
+        }
+
+        input.Player.Enable();
     }
+
+    public void OnDisable()
+    {
+        input.Player.Disable();
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        motion = context.ReadValue<Vector2>();
+    }
+
+    public void OnTongue(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            tongue.StartGrapple();
+        }
+
+        else if (context.canceled && grappeling)
+        {
+            //SetGrounded();//??
+            tongue.StopGrapple();
+            /*Rigid.velocity = Vector3.zero;
+            Rigid.angularVelocity = Vector3.zero;*/
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        //check for jumping
+        if (States == WorldState.Grounded)
+        {
+            //if the player can jump, isnt attacking and isnt using an item
+            if (!HasJumped)
+            {
+
+                StopCoroutine(JumpUp(JumpAmt));
+                StartCoroutine(JumpUp(JumpAmt));
+                return;
+            }
+        }
+    }
+
+    public void OnQuit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
+
+    //*******************************************************************************************************************************************************
 
     private void Update()   //inputs
     {
@@ -85,46 +146,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = Rigid.position;
         }
-        //transform.position = Rigid.position;
-
-        //check for jumping
-        if (States == WorldState.Grounded)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                //if the player can jump, isnt attacking and isnt using an item
-                if (!HasJumped)
-                {
-
-                    StopCoroutine(JumpUp(JumpAmt));
-                    StartCoroutine(JumpUp(JumpAmt));
-                    return;
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            //SetInAir();
-            tongue.StartGrapple();
-        }
-
-        else if (Input.GetMouseButtonUp(0) && grappeling)
-        {
-            SetGrounded();
-            tongue.StopGrapple();
-            Debug.Log("about to leave grappeling " + Frog.transform.rotation);
-            transform.rotation = originalPosition;
-            Debug.Log("Left grappeling " + Frog.transform.rotation);
-            //SetGrounded();
-            //Quaternion rot = Rigid.rotation;
-            /*rot[0] = 0;
-            rot[2] = 0;
-            Rigid.rotation = rot;
-            //Rigid.transform.up;
-            //Rigid.Sleep();
-            //Rigid.WakeUp();*/
-        }
     }
 
     // Update is called once per frame
@@ -136,7 +157,8 @@ public class PlayerController : MonoBehaviour
         {
             float Spd = Speed;
 
-            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            //if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            if (motion.x == 0 && motion.y == 0)
             {
                 //we are not moving, lerp to a walk speed
                 Spd = 0f;
@@ -160,6 +182,9 @@ public class PlayerController : MonoBehaviour
             if (HasJumped) //only return back to ground once jump state is over
                 return;
 
+            if (grappeling)
+                return;
+
             FallingCtrl(delta, Speed, Acceleration);
 
             //check for ground
@@ -181,7 +206,7 @@ public class PlayerController : MonoBehaviour
         States = WorldState.Grounded;
     }
     //transition to air
-    void SetInAir()
+    public void SetInAir()
     {
         States = WorldState.InAir;
     }
@@ -234,8 +259,8 @@ public class PlayerController : MonoBehaviour
     //move our character
     void MoveSelf(float d, float Speed, float Accel)
     {
-        float _xMov = Input.GetAxis("Horizontal");
-        float _zMov = Input.GetAxis("Vertical");
+        float _xMov = motion.x;// Input.GetAxis("Horizontal");
+        float _zMov = motion.y;// Input.GetAxis("Vertical");
         bool MoveInput = false;
 
         Vector3 screenMovementForward = CamY.transform.forward;
@@ -298,8 +323,8 @@ public class PlayerController : MonoBehaviour
     void FallingCtrl(float d, float Speed, float Accel)
     {
         //control our direction slightly when falling
-        float _xMov = Input.GetAxis("Horizontal");
-        float _zMov = Input.GetAxis("Vertical");
+        float _xMov = motion.x;// Input.GetAxis("Horizontal");
+        float _zMov = motion.y;// Input.GetAxis("Vertical");
 
         Vector3 screenMovementForward = CamY.transform.forward;
         Vector3 screenMovementRight = CamY.transform.right;

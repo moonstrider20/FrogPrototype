@@ -18,22 +18,14 @@ public class Tongue : MonoBehaviour
     public TargetController TargetController;
     public PlayerController PlayerController;
 
+    //*********************
+    //Tongue sound
+    public AudioSource audioSource;
+    public AudioClip tongue;
+
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
-    }
-
-    void Update()
-    {
-        /*if(Input.GetMouseButtonDown(0))
-        {
-            StartGrapple();
-        }
-
-        else if (Input.GetMouseButtonUp(0))
-        {
-            StopGrapple();
-        }*/
     }
 
     void LateUpdate()
@@ -43,27 +35,13 @@ public class Tongue : MonoBehaviour
 
     public void StartGrapple()
     {
-        //RaycastHit hit;
-        
-        /*if (Physics.Raycast(thirdCamera.position, thirdCamera.forward, out hit, maxDistance, whatIsGrappleable))
-        {
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-
-            joint.spring = 3f;
-            joint.damper = 5f;
-            joint.massScale = 3f;
-
-            lr.positionCount = 2;
-            currentGrapplePosition = tongueTip.position;
-        }*/
         if (targetInSight)
         {
+            audioSource.PlayOneShot(tongue, 0.5f);
+
             PlayerController.grappeling = true;
+            PlayerController.Rigid.freezeRotation = true;
+            //PlayerController.SetInAir();
             grapplePoint = targetPos;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
@@ -93,7 +71,6 @@ public class Tongue : MonoBehaviour
         lr.positionCount = 0;
         Destroy(joint);
         PlayerController.grappeling = false;
-        PlayerController.transform.rotation = PlayerController.originalPosition;
     }
 
     private Vector3 currentGrapplePosition;

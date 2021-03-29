@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public class TargetController : MonoBehaviour
+public class TargetController : MonoBehaviour, PlayerInput.IGrappleActions
 {
     Camera cam;
     public TargetInView target;
@@ -17,20 +18,29 @@ public class TargetController : MonoBehaviour
 
     public Tongue Tongue;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        cam = Camera.main;
-        image = gameObject.GetComponent<Image>();
 
-        lockedOn = false;
-        lockedTarget = 0;
+    public PlayerInput input;
+
+    public void OnEnable()
+    {
+        if (input == null)
+        {
+            input = new PlayerInput();
+
+            input.Grapple.SetCallbacks(this);
+        }
+
+        input.Grapple.Enable();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDisable()
     {
-        if (Input.GetMouseButtonDown(1) && !lockedOn)
+        input.Grapple.Disable();
+    }
+
+    public void OnToggle(InputAction.CallbackContext context)
+    {
+        if (!lockedOn)
         {
             if (nearByTargets.Count >= 1)
             {
@@ -42,15 +52,18 @@ public class TargetController : MonoBehaviour
             }
         }
 
-        else if ((Input.GetMouseButtonDown(1) && lockedOn) || nearByTargets.Count == 0)
+        else if (lockedOn)
         {
             lockedOn = false;
             image.enabled = false;
             lockedTarget = 0;
             target = null;
         }
+    }
 
-        if (Input.GetMouseButtonDown(2) && lockedOn)
+    public void OnSwitch(InputAction.CallbackContext context)
+    {
+        if (lockedOn)
         {
             if (lockedTarget == nearByTargets.Count - 1)
             {
@@ -63,7 +76,30 @@ public class TargetController : MonoBehaviour
                 target = nearByTargets[lockedTarget];
             }
         }
-        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        cam = Camera.main;
+        image = gameObject.GetComponent<Image>();
+
+        image.enabled = false;
+        lockedOn = false;
+        lockedTarget = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (nearByTargets.Count == 0)
+        {
+            lockedOn = false;
+            image.enabled = false;
+            lockedTarget = 0;
+            target = null;
+        }
+
         if (lockedOn)
         {
             target = nearByTargets[lockedTarget];
