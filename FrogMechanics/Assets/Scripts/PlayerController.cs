@@ -414,15 +414,17 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         Cursor.lockState = CursorLockMode.None;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        
-        if (collision.gameObject.CompareTag("Mist"))
-        {
-            /*loseScreen.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;           //Unlock cursor
-            Cursor.visible = true;*/
-            Debug.Log("You DIED!!!");
-        }
-    }
+    //Dying and winning now works, different scripts -Gary
+
+  //  void OnCollisionEnter(Collision collision)
+  //  {
+   //     
+   ///     if (collision.gameObject.CompareTag("Mist"))
+   //     {
+     //       /*loseScreen.SetActive(true);
+     //       Cursor.lockState = CursorLockMode.None;           //Unlock cursor
+         //   Cursor.visible = true;*/
+       //     Debug.Log("You DIED!!!");
+       // }
+    //}
 }

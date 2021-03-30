@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 367630032355055915}
   m_Layer: 0
   m_Name: RigidCollider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 367630033571735442}
   m_Layer: 0
   m_Name: Froskr
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a49c4ac5228464fb5a5a760fd46360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenuUI: {fileID: 0}
   motion: {x: 0, y: 0}
   tongue: {fileID: 367630032592215443}
   Frog: {fileID: 0}

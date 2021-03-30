@@ -15,7 +15,7 @@ public class DetectCollision : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(Pos, collisionRadius, WallStick);
         if (hitColliders.Length > 0)
         {
-            //we are on the ground
+            //we are on the ground 
             return true;
         }
 
