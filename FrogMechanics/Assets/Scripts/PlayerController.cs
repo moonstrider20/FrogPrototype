@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         InAir, //in the air
     }
 
+
+
+
+
+
     [Header("Menu Stuff Here!")] //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
@@ -147,7 +152,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 
     //*******************************************************************************************************************************************************
 
-    private void Update()   //inputs
+    private void Update()   //inputs (AND PAUSE -GARY LOL)
     {
         if (grappeling)
         {
@@ -159,6 +164,20 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         {
             transform.position = Rigid.position;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+                if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+       
+
     }
 
     // Update is called once per frame
@@ -397,6 +416,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 
     //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //everything below is for dying and menus
+
 
     void Resume()
     {
