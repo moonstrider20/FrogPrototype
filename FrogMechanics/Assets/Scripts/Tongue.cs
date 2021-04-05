@@ -11,6 +11,7 @@ public class Tongue : MonoBehaviour
     public Transform player;
     //private float maxDistance = 150f;
     private SpringJoint joint;
+    private Rigidbody rb;
 
     public Vector3 targetPos;
     public bool targetInSight;
@@ -70,6 +71,7 @@ public class Tongue : MonoBehaviour
     {
         lr.positionCount = 0;
         Destroy(joint);
+        Destroy(rb);
         PlayerController.grappeling = false;
     }
 
