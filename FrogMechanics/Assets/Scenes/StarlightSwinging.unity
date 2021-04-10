@@ -222,6 +222,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7980553163857224245, guid: 5c1e74737caa31b43bdcf42f06e0423e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d30d2a6f3be93ce4d86b66163659c49f, type: 2}
     - target: {fileID: 7980553163857224247, guid: 5c1e74737caa31b43bdcf42f06e0423e, type: 3}
       propertyPath: m_Name
       value: Cloud
