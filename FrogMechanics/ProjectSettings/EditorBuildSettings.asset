@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ae04d6a4fd567a840b7fa798abcf4168
   - enabled: 1
-    path: Assets/Scenes/FungalFSlice.unity
+    path: Assets/Scenes/FungalForest.unity
     guid: 8138edcc6c570f74bad8cf709db55b58
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
