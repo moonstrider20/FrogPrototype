@@ -16,12 +16,25 @@ public class ChangeScene : MonoBehaviour
     public int scene;                       //the index of the scene player will travel to
     public Vector3 playerPosition;          //position you want the player to be in the next scene
     public VectorValue playerStorage;       //holds the VectorValue asset found in assets, at the moment in scripts
+    public bool artifactFound;              //Check box in the inspector if this is attached to an artifact or a portal that opens after artifact is aquired
+    public bool requiresArtifact;           //Check box if an artifact is required to use
+    public int artifactTotal;               //Enter number of artifacts required to enter
 
     //Checks if something entered the "portal"
     void OnTriggerEnter(Collider other)
     {
         if (other.name == "RigidCollider")  //checks if it is the player
         {
+            if (requiresArtifact)
+            {
+                if (PlayerController.totalArtifacts < artifactTotal)
+                    return;
+            }
+
+            if (artifactFound)
+            {
+                PlayerController.totalArtifacts++;
+            }
             playerStorage.initalValue = playerPosition; //sets the player's position for the next scene
             SceneManager.LoadScene(scene);              //loads the new scene
         }

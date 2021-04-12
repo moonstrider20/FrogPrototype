@@ -12,6 +12,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
+    public static int totalArtifacts;
+
     [Header("Menu Stuff Here!")]
     public static bool GameIsPaused = false;    //Place to hold status if game is paused
     public GameObject pauseMenuUI;              //Object to hold pause menu
@@ -75,6 +77,8 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(totalArtifacts);
+
         Rigid = GetComponentInChildren<Rigidbody>();    //Get sphere rigidbody
         Colli = GetComponent<DetectCollision>();        //Get DetectCollision script
         animator = GetComponentInChildren<Animator>();  //Get Animator component

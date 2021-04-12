@@ -555,8 +555,8 @@ MonoBehaviour:
   targetInSight: 0
   TargetController: {fileID: 0}
   PlayerController: {fileID: 6841950722832144222}
-  audioSource: {fileID: 0}
-  tongue: {fileID: 0}
+  audioSource: {fileID: 7028465585962982011}
+  tongue: {fileID: 8300000, guid: 9e791213779ae5d4d92521b9c1f565ca, type: 3}
 --- !u!1 &6841950724316998112
 GameObject:
   m_ObjectHideFlags: 0
