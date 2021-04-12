@@ -413,7 +413,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
             ""id"": ""dfe3f437-0a96-4767-a2a9-c435deda9767"",
             ""actions"": [
                 {
-                    ""name"": ""Camera"",
+                    ""name"": ""Look"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3ba1e13b-e820-4c2d-a837-4b8b354cc67f"",
                     ""expectedControlType"": ""Vector2"",
@@ -429,7 +429,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -440,7 +440,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Xbox"",
-                    ""action"": ""Camera"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -489,7 +489,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Grapple_Switch = m_Grapple.FindAction("Switch", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
-        m_Camera_Camera = m_Camera.FindAction("Camera", throwIfNotFound: true);
+        m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -637,12 +637,12 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     // Camera
     private readonly InputActionMap m_Camera;
     private ICameraActions m_CameraActionsCallbackInterface;
-    private readonly InputAction m_Camera_Camera;
+    private readonly InputAction m_Camera_Look;
     public struct CameraActions
     {
         private @PlayerInput m_Wrapper;
         public CameraActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Camera => m_Wrapper.m_Camera_Camera;
+        public InputAction @Look => m_Wrapper.m_Camera_Look;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -652,16 +652,16 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_CameraActionsCallbackInterface != null)
             {
-                @Camera.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamera;
-                @Camera.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamera;
-                @Camera.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCamera;
+                @Look.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnLook;
+                @Look.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnLook;
+                @Look.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnLook;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Camera.started += instance.OnCamera;
-                @Camera.performed += instance.OnCamera;
-                @Camera.canceled += instance.OnCamera;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
             }
         }
     }
@@ -698,6 +698,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     }
     public interface ICameraActions
     {
-        void OnCamera(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }

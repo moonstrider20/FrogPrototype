@@ -4,11 +4,12 @@ using UnityEngine.InputSystem;
 public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
 {
     public PlayerInput input;
-    public Vector2 motion;
+    public Vector2 mcamera;
+
     //public bool FollowTargetRotation;
     [Header("FollowSpeed")]
     public float FollowRotSpeed = 0.5f;
-    public float FollowRotSpeedFlying = 0.5f;
+    public float FollowRotSpeedFlying = 10f;
     public float GravityFollowSpeed = 0.1f;
     private Vector3 LookDirection;
 
@@ -23,11 +24,11 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
 
     private Vector3 LookAtPos;
     [Header("Mouse Speeds")]
-    public float MouseSpeed = 0.5f;
+    public float MouseSpeed = 2;
     public float turnSmoothing = 0.1f;
     public float minAngle = -35;
     public float maxAngle = 35;
-    public float LookDirectionSpeed = 0.5f;
+    public float LookDirectionSpeed = 2f;
 
     public float DistanceFromPlayer;
     private float CurrentDis;
@@ -59,10 +60,10 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
         input.Camera.Disable();
     }
 
-    
-    public void OnCamera(InputAction.CallbackContext context)
+
+    public void OnLook(InputAction.CallbackContext context)
     {
-        motion = context.ReadValue<Vector2>();                      //Get the values of the directions Player is moving (arrows, WASD, ect)
+        mcamera = context.ReadValue<Vector2>();                      //Get the values of the directions Player is moving (arrows, WASD, ect)
     }
     //***********************************************************************
 
@@ -75,7 +76,7 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
         LookAtPos = target.position;
         CurrentDis = DistanceFromPlayer;
 
-        tiltAngle = 2.5f;
+        tiltAngle = 10f;
 
         LookDirection = transform.forward;
 
@@ -99,8 +100,8 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
 
     public void Tick(float d)
     {
-        float h = motion.x;// Input.GetAxis("Mouse X");
-        float v = motion.y;// Input.GetAxis("Mouse Y");
+        float h = Input.GetAxis("Mouse X");
+        float v = Input.GetAxis("Mouse Y");
         float rotateSpeed = MouseSpeed;
 
         HandleRotation(d, v, h, rotateSpeed);
@@ -119,7 +120,7 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
     {
         float targetZ = DistanceFromPlayer;
 
-        CurrentDis = Mathf.Lerp(CurrentDis, targetZ, delta);
+        CurrentDis = Mathf.Lerp(CurrentDis, targetZ, delta * 5f);
 
         Vector3 tp = Vector3.zero;
         tp.z = CurrentDis;
@@ -151,7 +152,7 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
 
         if (smoothX != 0)
         {
-            transform.RotateAround(transform.position, transform.up, ((smoothX * speed)) * d);
+            transform.RotateAround(transform.position, transform.up, ((smoothX * speed) * 30f) * d);
         }
     }
 }

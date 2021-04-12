@@ -400,7 +400,7 @@
             "id": "dfe3f437-0a96-4767-a2a9-c435deda9767",
             "actions": [
                 {
-                    "name": "Camera",
+                    "name": "Look",
                     "type": "PassThrough",
                     "id": "3ba1e13b-e820-4c2d-a837-4b8b354cc67f",
                     "expectedControlType": "Vector2",
@@ -416,7 +416,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Camera",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -427,7 +427,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
-                    "action": "Camera",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

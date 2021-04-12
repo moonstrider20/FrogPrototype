@@ -1,277 +1,297 @@
-﻿using System.Collections;
+﻿/*Amorina Tabera
+    This code is meant to go on the player. 
+    Try to leave it with what directly has to do with the player, like inputs and the basic mechanics.
+    Since this is for Froskr, it handles player inputs to enable basic movement, jumping, wall walking,
+        when to call grappeling, animations, and so on.
+    This code is dependent on the new Unity Input System. 
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
+    [Header("Menu Stuff Here!")]
+    public static bool GameIsPaused = false;    //Place to hold status if game is paused
+    public GameObject pauseMenuUI;              //Object to hold pause menu
+
+    //Class to hold the different states Froskr is in
+    //This one has variabels that represent if Froskr is on the ground or in the air
     public enum WorldState
     {
-        Grounded, //on ground
-        InAir, //in the air
+        Grounded,                       //Froskr is on the ground
+        InAir,                          //Froskr is in the air
     }
 
+    public PlayerInput input;           //Place to call inputActions
+    public Vector2 motion;              //Vector2 to hold direction of player movement from arrows/wasd/joystick ect.
+    public Tongue tongue;               //Hold the script tongue on Froskr's tongue in the hierarchy
+    public PlayerController Frog;       //Hold the player, drag Froskr from the hierarchy
+    public bool canMove;                //Place to hold status if player can move (when talking)
+    public VectorValue startingPosition;//Place to hold starting position in scene, drag from assets
+    public Animator animator;           //Place to hold animation component
 
 
+    public WorldState States;           //Place to hold what state Froskr is in
+    private Transform Cam;              //Hold position of main Camera
+    private Transform CamY;             //Hold position of main Camera pivot point
+    private CameraFollow CamFol;        //Call CameraFollow script on the main Camera
 
+    private DetectCollision Colli;      //Call script DetectCollision
 
+    public Rigidbody Rigid;             //Place to hold rigidbody of the sphere
 
-    [Header("Menu Stuff Here!")] //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    public static bool GameIsPaused = false;
-    public GameObject pauseMenuUI;
-    //public GameObject loseScreen;*/
-
-
-    public PlayerInput input;
-    public Vector2 motion;
-
-
-
-    public Tongue tongue;
-
-    public PlayerController Frog;
-
-
-    public WorldState States;
-    private Transform Cam;
-    private Transform CamY;
-    private CameraFollow CamFol;
-
-    private DetectCollision Colli;
-
-    public Rigidbody Rigid;
-
-    float delta;
-    public bool grappeling = false;
-    public Quaternion originalPosition;
+    float delta;                        //To hold current time
+    public bool grappeling = false;     //Determine if Froskr is grappeling
 
     [Header("Physics")]
-    public Transform[] GroundChecks;
-    public float DownwardPush; //what is applied to the player when on a surface to stick to it
-    public float GravityAmt;    //how much we are pulled downwards when we are on a wall
-    public float GravityBuildSpeed; //how quickly we build our gravity speed
-    private float ActGravAmt; //the actual gravity applied to our character
+    public Transform[] GroundChecks;            //Check the surface Froskr is on
+    public float DownwardPush;                  //Push Froskr against a surface to stick
+    public float GravityAmt;                    //The pull of "local/world" gravity
+    public float GravityBuildSpeed;             //How quickly Froskr builds gravity speed
+    private float ActGravAmt;                   //The actual gravity applied to Froskr at the moment
 
-    public LayerMask WallStick; //what layers the ground can be
-    public float GravityRotationSpeed = 10f; //how fast we rotate to a new gravity direction
+    public LayerMask WallStick;                 //What layers the ground can be
+    public float GravityRotationSpeed = 10f;    //How fast Froskr rotates to a new gravity direction
 
     [Header("Stats")]
-    public float Speed = 15f; //max speed for basic movement
-    public float Acceleration = 4f; //how quickly we build speed
-    public float turnSpeed = 2f;
-    private Vector3 MovDirection, movepos, targetDir, GroundDir; //where to move to
+    public float Speed = 15f;                   //Max speed for basic movement
+    public float Acceleration = 4f;             //Acceleration to Speed
+    public float turnSpeed = 2f;                //Turning speed (no clipping but physcially turn)
+    private Vector3 MovDirection;               //Direction Froskr moves
+    private Vector3 movepos;                    //Position Froskr moves to
+    private Vector3 targetDir;                  //Target direction of Froskr
+    private Vector3 GroundDir;                  //Ground direction
 
     [Header("Jumps")]
-    public float JumpAmt;
-    private bool HasJumped;
+    public float JumpAmt;                       //Jump amount
+    private bool HasJumped;                     //Check if Froskr has jumped
+
+    [Header("Audio")]
+    public AudioSource audioSource;             //Assign an audio source, can be Froskr himself
+    public AudioClip walking;                   //To hold walking audio clip, dragged from assets
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        Rigid = GetComponentInChildren<Rigidbody>();
-        Colli = GetComponent<DetectCollision>();
-        GroundDir = transform.up;
-        SetGrounded();
+        Rigid = GetComponentInChildren<Rigidbody>();    //Get sphere rigidbody
+        Colli = GetComponent<DetectCollision>();        //Get DetectCollision script
+        animator = GetComponentInChildren<Animator>();  //Get Animator component
+        GroundDir = transform.up;                       //Start with the Ground Direction in the positive direciton of the y-axis
+        SetGrounded();                                  //Set state to grounded
 
-        Cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        CamY = Cam.transform.parent.parent.transform;
-        CamFol = Cam.GetComponentInParent<CameraFollow>();
+        Cam = GameObject.FindGameObjectWithTag("MainCamera").transform;     //Get the main camera
+        CamY = Cam.transform.parent.parent.transform;                       //Get the pivot
+        CamFol = Cam.GetComponentInParent<CameraFollow>();                  //Get the CameraFollow script
 
-        //detatch rigidbody so it can move freely 
-        Rigid.transform.parent = null;
+        Rigid.transform.parent = null;                                      //Detach the sphere rigidbody so it can move around freely
 
-        Cursor.lockState = CursorLockMode.Locked;           //Keep cursor in the center, not wandering
-        originalPosition = Rigid.transform.rotation;
+        Cursor.lockState = CursorLockMode.Locked;                           //Keep cursor in the center, not wandering
+        canMove = true;                                                     //Player can move right away
+        Rigid.transform.position = startingPosition.initalValue;            //Set player to position according to scene
     }
 
     //*******************************************************************************************************************************************************************
+
+    //Method to enable the inputActions called PlayerInput
     public void OnEnable()
     {
-        if (input == null)
+        if (input == null)                      //Good coding practice
         {
-            input = new PlayerInput();
+            input = new PlayerInput();          //set input to PlayerInput()
 
-            input.Player.SetCallbacks(this);
+            input.Player.SetCallbacks(this);    //Enable the callbacks
         }
 
-        input.Player.Enable();
+        input.Player.Enable();                  //Enable input
     }
 
+    //Method to disable the inputActions called PlayerInput
     public void OnDisable()
     {
-        input.Player.Disable();
+        input.Player.Disable();                 //Disable input
     }
 
+    //Method to call Move 
     public void OnMove(InputAction.CallbackContext context)
     {
         motion = context.ReadValue<Vector2>();
     }
 
+    //Method to call Tongue
     public void OnTongue(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started)                        //If player presses grapple button
         {
-            tongue.StartGrapple();
+            tongue.StartGrapple();                  //Call method StartGrapple from the tongue script
         }
 
-        else if (context.canceled && grappeling)
+        else if (context.canceled && grappeling)    //If player stops pressing grappple button and was grappeling
         {
-            //SetGrounded();//??
-            tongue.StopGrapple();
-            /*Rigid.velocity = Vector3.zero;
-            Rigid.angularVelocity = Vector3.zero;*/
+            tongue.StopGrapple();                   //Call method StopGrapple form the tongue script
+            animator.SetInteger("State", 2);
         }
     }
 
+    //Method to call Jump
     public void OnJump(InputAction.CallbackContext context)
     {
-        //check for jumping
-        if (States == WorldState.Grounded)
+        if (States == WorldState.Grounded)          //Check if Froskr is on the ground, no double jumps
         {
-            //if the player can jump, isnt attacking and isnt using an item
-            if (!HasJumped)
+            if (!HasJumped)                         //If Froskr has not jumped yet
             {
 
-                StopCoroutine(JumpUp(JumpAmt));
-                StartCoroutine(JumpUp(JumpAmt));
+                StopCoroutine(JumpUp(JumpAmt));     //Stop Coroutine for jumping
+                StartCoroutine(JumpUp(JumpAmt));    //Start Coroutine for jumping
                 return;
             }
         }
     }
 
-
-    //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //Method to call Quit
     public void OnQuit(InputAction.CallbackContext context)
     {
-        Application.Quit(); //This is what happens right now. when (if) menus put in can comment out and enable the lines below
-        /*if (GameIsPaused)
-            Resume();
+        if (GameIsPaused)       //If esc was pressed and game is already paused
+            Resume();           //then resume the game
         else
-            Pause();*/
+            Pause();            //Else pause the game was paused already, so resume
     }
 
     //*******************************************************************************************************************************************************
 
-    private void Update()   //inputs (AND PAUSE -GARY LOL)
+    //Update is called once per frame
+    //Good for checking player inputs
+    private void Update()
     {
+        //Check if Froskr is grappeling
         if (grappeling)
         {
-            Rigid.position = transform.position;
-            SetInAir();
-            FallingCtrl(delta, Speed, Acceleration);
+            Rigid.position = transform.position;    //sphere follows Froskr 
+            SetInAir();                             //Set Froskr's state to inAir
+            FallingCtrl(delta, Speed, Acceleration);//Call method FallingCtrl
+            animator.SetInteger("State", 4);
         }
+
+        //Froskr is NOT grappeling
         else
         {
-            transform.position = Rigid.position;
+            transform.position = Rigid.position;    //Froskr follows sphere
+            //animator.SetInteger("State", 2);
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-                if (GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
-       
-
     }
 
-    // Update is called once per frame
-    void FixedUpdate()  //world movement
+    //FixedUpdate is called any number of times per frame depending on framerate
+    //Good for movement/physics
+    void FixedUpdate()
     {
-        delta = Time.deltaTime;
+        //If Froskr is not allowed to move (due to talking), motion values set to zero
+        if (!canMove)
+        {
+            motion.x = 0;
+            motion.y = 0;
+        }
 
+        delta = Time.deltaTime;             //hold Time.deltaTime, easier for passing through methods and less typing
+
+        //If Froskr is on the ground
         if (States == WorldState.Grounded)
         {
-            float Spd = Speed;
+            float Spd = Speed;              //Make a variable to hold Froskr's current speed, set Froskr's speed to normal
 
-            //if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            //If player is not trying to move Froskr
             if (motion.x == 0 && motion.y == 0)
             {
-                //we are not moving, lerp to a walk speed
-                Spd = 0f;
+                Spd = 0f;                   //Set Froskr's speed to zero
             }
 
 
-            MoveSelf(delta, Spd, Acceleration);
+            MoveSelf(delta, Spd, Acceleration); //Call method MoveSelf to move Froskr accordingly
 
-            //switch to air
+            //Check if Froskr is on the ground
             bool Ground = Colli.CheckGround(-GroundDir);
 
+            //If Froskr is not on the ground
             if (!Ground)
             {
-                SetInAir();
-                return;
+                SetInAir();     //Set Froskr's state to inAir
+                return;         //return now so we don't accidently go into the else if statement below
             }
 
         }
+
+        //Check if Froskr is in the air
         else if (States == WorldState.InAir)
         {
-            if (HasJumped) //only return back to ground once jump state is over
-                return;
+            //Check if Froskr jumped
+            if (HasJumped)
+                return;     //only return when jump time is done
 
-            if (grappeling)
-                return;
+            FallingCtrl(delta, Speed, Acceleration);        //When jump time done, call method FallingCtrl
 
-            FallingCtrl(delta, Speed, Acceleration);
-
-            //check for ground
+            //Check if Froskr hit the ground
             bool Ground = Colli.CheckGround(-GroundDir);
 
+            //If Froskr hit the ground
             if (Ground)
             {
-                SetGrounded();
+                Rigid.useGravity = false;   //Don't use local world gravity anymore
+                SetGrounded();              //Set Froskr's state to ground
+                animator.SetInteger("State", 0);
                 return;
             }
         }
     }
 
-    //transition to ground
+    //Transition Froskr to the ground
     public void SetGrounded()
     {
         ActGravAmt = 5f; //our gravity is returned to normal
 
         States = WorldState.Grounded;
     }
-    //transition to air
+
+    //Transition Froskr to the air
     public void SetInAir()
     {
         States = WorldState.InAir;
     }
-    //jump up
+
+    //Froskr jumps up
     IEnumerator JumpUp(float UpwardsAmt)
     {
-        HasJumped = true;
+        HasJumped = true;                                                       //Froskr has jumped
 
-        //Rigid.velocity = Vector3.zero;
+        SetInAir();                                                             //Set Froskr's state to inAir
 
-        SetInAir();
-
+        //Good coding practice
         if (UpwardsAmt != 0)
-            Rigid.AddForce((transform.up * UpwardsAmt), ForceMode.Impulse);
-
-        ActGravAmt = 0;
+            Rigid.AddForce((transform.up * UpwardsAmt), ForceMode.Impulse);     //Froskr jumps
 
         yield return new WaitForSecondsRealtime(0.3f);
         HasJumped = false;
+        Rigid.useGravity = true;
     }
-    //check the angle of the floor we are stood on
+
+    //Check the angle of the floor Froskr is standing on
     Vector3 FloorAngleCheck()
     {
+        //RaycastHit is a structure, make three total, once for each groundCheck
         RaycastHit HitFront;
         RaycastHit HitCentre;
         RaycastHit HitBack;
 
+        //Physics.Raycast returns a bool, we use 'out' for the RaycastHit variables since they are structures
+        //Physics.Racast(origin"starting point", direction"direction of ray", hitInfo"contains more info if returns true", maxDistance, layerMask)
+        //More on 'out'- so if returns true, the RaycastHit structure is filled out with the information about what what hit. 
         Physics.Raycast(GroundChecks[0].position, -GroundChecks[0].transform.up, out HitFront, 10f, WallStick);
         Physics.Raycast(GroundChecks[1].position, -GroundChecks[1].transform.up, out HitCentre, 10f, WallStick);
         Physics.Raycast(GroundChecks[2].position, -GroundChecks[2].transform.up, out HitBack, 10f, WallStick);
 
-        Vector3 HitDir = transform.up;
+        Vector3 HitDir = transform.up;      //create a Vector3 in the positive direciton of the y-axis
 
+        //Get the normals of the surface Froskr is on from each groundCheck
+        //Make sure there was something hit by the raycast and then get the normal
         if (HitFront.transform != null)
         {
             HitDir += HitFront.normal;
@@ -285,62 +305,53 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             HitDir += HitBack.normal;
         }
 
+        //returnt the overall direction
         return HitDir.normalized;
     }
 
     //move our character
     void MoveSelf(float d, float Speed, float Accel)
     {
-        float _xMov = motion.x;// Input.GetAxis("Horizontal");
-        float _zMov = motion.y;// Input.GetAxis("Vertical");
-        bool MoveInput = false;
+        bool MoveInput = false;                                 //Set getting input to false
 
-        Vector3 screenMovementForward = CamY.transform.forward;
-        Vector3 screenMovementRight = CamY.transform.right;
+        Vector3 screenMovementForward = CamY.transform.forward; //Get what direction camera is facing
+        Vector3 screenMovementRight = CamY.transform.right;     //Get what direction is "right" according to the camera (Vector3(1,0,0))
 
-        Vector3 h = screenMovementRight * _xMov;
-        Vector3 v = screenMovementForward * _zMov;
+        Vector3 h = screenMovementRight * motion.x;             //Get actual horizontal movment
+        Vector3 v = screenMovementForward * motion.y;           //Get actual walking forwards or backwards
 
-        Vector3 moveDirection = (v + h).normalized;
+        Vector3 moveDirection = (v + h).normalized;             //Just have direction of player movement
 
-        if (_xMov == 0 && _zMov == 0)
+        //If player is not moving Froskr
+        if (motion.x == 0 && motion.y == 0)
         {
-            targetDir = transform.forward;
+            targetDir = transform.forward;                      //targetDir set to where Froskr is facing (blue, positive z-axis direction according to Froskr)
+            animator.SetInteger("State", 0);
         }
+        //Player is moving Froskr
         else
         {
-            targetDir = moveDirection;
-            MoveInput = true;
+            targetDir = moveDirection;                          //targetDir set to direction Player wants to move Froskr
+            MoveInput = true;                                   //Player has inputs
+            animator.SetInteger("State", 1);
         }
 
-        if (targetDir == Vector3.zero)
-        {
-            targetDir = transform.forward;
-        }
+        Quaternion lookDir = Quaternion.LookRotation(targetDir);    //Set Froskr's look direction to the targetDir
+        float TurnSpd = turnSpeed;                                  //Make a variabel to hold the turning speed
 
-        Quaternion lookDir = Quaternion.LookRotation(targetDir);
-        float TurnSpd = turnSpeed;
-
-        Vector3 SetGroundDir = FloorAngleCheck();
-        GroundDir = Vector3.Lerp(GroundDir, SetGroundDir, d * GravityRotationSpeed);
+        Vector3 SetGroundDir = FloorAngleCheck();                   //Find out what direction the ground is
+        GroundDir = Vector3.Lerp(GroundDir, SetGroundDir, d * GravityRotationSpeed);    //
 
         //lerp mesh slower when not on ground
         RotateSelf(SetGroundDir, d, GravityRotationSpeed);
         RotateMesh(d, targetDir, TurnSpd);
 
-        //move character
+        //moving character
         float Spd = Speed;
         Vector3 curVelocity = Rigid.velocity;
 
-        if (!MoveInput) //if we are not pressing a move input we move towards velocity //or are crouching
-        {
-            Spd = Speed * 0.8f; //less speed is applied to our character
-            MovDirection = Vector3.Lerp(transform.forward, Rigid.velocity.normalized, 12f * d);
-        }
-        else
-        {
-            MovDirection = transform.forward;
-        }
+        MovDirection = transform.forward;
+
 
         Vector3 targetVelocity = MovDirection * Spd;
 
@@ -348,15 +359,14 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         targetVelocity -= SetGroundDir * DownwardPush;
 
         Vector3 dir = Vector3.Lerp(curVelocity, targetVelocity, d * Accel);
-        Rigid.velocity = dir;
+        Rigid.velocity = dir;                                               //Froskr FINALLY MOVES at this line
     }
 
     //move once we are in air
     void FallingCtrl(float d, float Speed, float Accel)
     {
-        //control our direction slightly when falling
-        float _xMov = motion.x;// Input.GetAxis("Horizontal");
-        float _zMov = motion.y;// Input.GetAxis("Vertical");
+        float _xMov = motion.x;
+        float _zMov = motion.y;
 
         Vector3 screenMovementForward = CamY.transform.forward;
         Vector3 screenMovementRight = CamY.transform.right;
@@ -376,9 +386,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         }
 
         Quaternion lookDir = Quaternion.LookRotation(targetDir);
-
-        //Vector3 SetGroundDir = FloorAngleCheck();
-        //GroundDir = Vector3.Lerp(GroundDir, SetGroundDir, d * GravityRotationSpeed);
 
         //lerp mesh slower when not on ground
         RotateSelf(GroundDir, d, GravityRotationSpeed);
@@ -414,37 +421,21 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         transform.rotation = Quaternion.Slerp(transform.rotation, SlerpRot, spd * d);
     }
 
-    //KAVAN@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    //everything below is for dying and menus
-
-
+    //Method to resume game when paused
     void Resume()
     {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        pauseMenuUI.SetActive(false);               //enable pauseMenuUI
+        Time.timeScale = 1f;                        //Resume time
+        GameIsPaused = false;                       //Game no longer paused
+        Cursor.lockState = CursorLockMode.Locked;   //Relock the cursro for player
     }
 
+    //Method to pause game while playing
     void Pause()
     {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
-        Cursor.lockState = CursorLockMode.None;
+        pauseMenuUI.SetActive(true);                //disable the pauseMenuUI
+        Time.timeScale = 0f;                        //Pause time
+        GameIsPaused = true;                        //Game is now paused
+        Cursor.lockState = CursorLockMode.None;     //Unlock the cursor for player
     }
-
-    //Dying and winning now works, different scripts -Gary
-
-  //  void OnCollisionEnter(Collision collision)
-  //  {
-   //     
-   ///     if (collision.gameObject.CompareTag("Mist"))
-   //     {
-     //       /*loseScreen.SetActive(true);
-     //       Cursor.lockState = CursorLockMode.None;           //Unlock cursor
-         //   Cursor.visible = true;*/
-       //     Debug.Log("You DIED!!!");
-       // }
-    //}
 }

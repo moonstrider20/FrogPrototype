@@ -41,10 +41,11 @@ public class Tongue : MonoBehaviour
             audioSource.PlayOneShot(tongue, 0.5f);
 
             PlayerController.grappeling = true;
-            PlayerController.Rigid.freezeRotation = true;
+            //PlayerController.Rigid.freezeRotation = true;
             //PlayerController.SetInAir();
             grapplePoint = targetPos;
             joint = player.gameObject.AddComponent<SpringJoint>();
+            rb = player.gameObject.GetComponent<Rigidbody>();
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
 
@@ -73,6 +74,9 @@ public class Tongue : MonoBehaviour
         Destroy(joint);
         Destroy(rb);
         PlayerController.grappeling = false;
+        //PlayerController.animator.SetInteger("State", 2);
+        /*PlayerController.Rigid.velocity = Vector3.zero;
+        PlayerController.Rigid.angularVelocity = Vector3.zero;*/
     }
 
     private Vector3 currentGrapplePosition;
