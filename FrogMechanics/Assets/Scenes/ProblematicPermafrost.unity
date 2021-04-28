@@ -6869,6 +6869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cam
       objectReference: {fileID: 0}
+    - target: {fileID: 3416064320127775726, guid: e85df5dccf74b824c80dd2a1896b6f12, type: 3}
+      propertyPath: far clip plane
+      value: 4000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e85df5dccf74b824c80dd2a1896b6f12, type: 3}
 --- !u!1001 &329809128
