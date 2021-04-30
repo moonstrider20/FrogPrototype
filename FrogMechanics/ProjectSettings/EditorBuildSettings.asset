@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ProblematicPermafrost.unity
     guid: 9df9c7a012eb7de4bb8825b9b49436d8
   - enabled: 1
-    path: Assets/Scenes/StarlightSwinging.unity
+    path: Assets/Scenes/V2StarlightSwinging.unity
     guid: a8549330090632147912b485d4ea87e6
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
