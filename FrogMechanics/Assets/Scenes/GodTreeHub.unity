@@ -11082,7 +11082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
+  playerPosition: {x: 850.67, y: -11892, z: -18522}
   playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
   artifactFound: 0
   artifactNumber: 0
