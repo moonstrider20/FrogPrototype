@@ -26,6 +26,14 @@ public class TextBox : MonoBehaviour
 
     public float typeSpeed;
 
+    [Header("Character Images")]
+    public Image rat;
+    public Image ax;
+    public Image duck;
+    //public Image unknown;
+    public Image frog;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +69,7 @@ public class TextBox : MonoBehaviour
 
         //theText.text = textLines[currentLine];
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (!isTyping)
             {
@@ -91,6 +99,33 @@ public class TextBox : MonoBehaviour
         theText.text = "";
         isTyping = true;
         cancelTyping = false;
+        char character;
+
+        character = lineOfText[letter];
+
+        if (character == 'F')
+            frog.enabled = true;
+        else frog.enabled = false;
+
+        if (character == 'A')
+            ax.enabled = true;
+        else ax.enabled = false;
+
+        if (character == 'D')
+            duck.enabled = true;
+        else duck.enabled = false;
+
+        /*if (character == 'U')
+            unknown.enabled = true;
+        else unknown.enabled = false;*/
+
+        if (character == 'R')
+            rat.enabled = true;
+        else rat.enabled = false;
+
+        Debug.Log(character);
+
+        letter += 3;
 
         while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
         {
@@ -98,7 +133,7 @@ public class TextBox : MonoBehaviour
             letter += 1;
             yield return new WaitForSeconds(typeSpeed);     //really only for courtines
         }
-        theText.text = lineOfText;
+        theText.text = lineOfText.Remove(0, 3);  //prints all of line if player tries to skip dialouge  
         isTyping = false;
         cancelTyping = false;
     }

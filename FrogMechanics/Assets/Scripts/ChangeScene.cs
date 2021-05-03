@@ -31,24 +31,44 @@ public class ChangeScene : MonoBehaviour
     {
         if (other.name == "RigidCollider")  //checks if it is the player
         {
-            //If it is a portal and requires a certain number of artifacts
+            /*//If it is a portal and requires a certain number of artifacts
             if (requiresArtifact)
             {
                 //Checks if player is allowed to enter
                 //If not enough, exit script
                 if (PlayerController.totalArtifacts < artifactTotal)
                     return;
-            }
+            }*/
 
             //If it is an artifact that you need to collect
             if (artifactFound)
             {
-                //Checks if the artifact has been collected already
+                if(artifactNumber == 1)
+                {
+                    if (PlayerController.strawberryArt == false)
+                        PlayerController.totalArtifacts++;
+                    PlayerController.strawberryArt = true;
+                }
+
+                else if(artifactNumber == 2)
+                { 
+                    if (PlayerController.rockArt == false)
+                        PlayerController.totalArtifacts++;
+                    PlayerController.rockArt = true;
+                }
+
+                else if(artifactNumber == 3)
+                {
+                    if (PlayerController.pizzaArt == false)
+                        PlayerController.totalArtifacts++;
+                    PlayerController.pizzaArt = true;
+                }
+                /*//Checks if the artifact has been collected already
                 if (artifactNumber > PlayerController.totalArtifacts)
                 {
                     //If not, increment the totalArtifacts
                     PlayerController.totalArtifacts++;
-                }
+                }*/
             }
             playerStorage.initalValue = playerPosition; //sets the player's position for the next scene
             SceneManager.LoadScene(scene);              //loads the new scene

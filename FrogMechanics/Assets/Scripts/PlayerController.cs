@@ -15,9 +15,21 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
     public static int totalArtifacts;
+    public static bool strawberryArt;
+    public static bool pizzaArt;
+    public static bool rockArt;
+
     public static int totalLives;
     public static bool hasDied;
     public VectorValue playerStorage;       //holds the VectorValue asset found in assets, at the moment in scripts
+
+    [Header("Artifact UI")]
+    public Image grayStrawberry;
+    public Image strawberry;
+    public Image grayPizza;
+    public Image pizza;
+    public Image grayRock;
+    public Image rock;
 
     [Header("Menu Stuff Here!")]
     public static bool GameIsPaused = false;    //Place to hold status if game is paused
@@ -96,6 +108,23 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     // Start is called before the first frame update
     void Start()
     {
+        //totalArtifacts = 3;
+
+        if(pizzaArt)
+        {
+            pizza.enabled = true;
+        }
+
+        if(rockArt)
+        {
+            rock.enabled = true;
+        }
+
+        if(strawberryArt)
+        {
+            strawberry.enabled = true;
+        }
+
         playerPosition = new Vector3(60.72f, 30.292f, -162.07f);
         totalLives = 10;//******************************
 
@@ -118,6 +147,8 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         Rigid.transform.position = startingPosition.initalValue;            //Set player to position according to scene
 
         floating = Floating();
+
+
 
         //************GARY******** lives
         //  maxLives = lives; //sets max lives to lives
@@ -189,6 +220,16 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         else
             Pause();            //Else pause the game was paused already, so resume
     }
+
+    /*public void OnRestart(InputAction.CallbackContext context)
+    {
+        Application.LoadLevel(Application.loadedLevel)
+    }
+
+    public void OnQuitLevel(InputAction.CallbackContext context)
+    {
+
+    }*/
 
     //*******************************************************************************************************************************************************
 
