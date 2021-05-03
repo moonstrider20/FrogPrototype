@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
@@ -74,6 +75,20 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     public AudioSource audioSource;             //Assign an audio source, can be Froskr himself
     public AudioClip walking;                   //To hold walking audio clip, dragged from assets
 
+
+
+
+
+    //***********GARY************* lives stuff
+
+    public Text livesText;
+
+    public GameObject loseScreen;
+
+    public int lives = 10;
+   // public float maxLives;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,6 +109,11 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         Cursor.lockState = CursorLockMode.Locked;                           //Keep cursor in the center, not wandering
         canMove = true;                                                     //Player can move right away
         Rigid.transform.position = startingPosition.initalValue;            //Set player to position according to scene
+
+
+        //************GARY******** lives
+      //  maxLives = lives; //sets max lives to lives
+
     }
 
     //*******************************************************************************************************************************************************************
@@ -183,7 +203,26 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             transform.position = Rigid.position;    //Froskr follows sphere
             //animator.SetInteger("State", 2);
         }
+
+
+        //**********GARY******** lives stuff
+
+        livesText.text = " x " + lives;
+        
     }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.tag == "Kill")
+        {
+            Debug.Log("fuck you");
+            lives -= 1;
+            
+        }
+    }
+
+
+
 
     //FixedUpdate is called any number of times per frame depending on framerate
     //Good for movement/physics
