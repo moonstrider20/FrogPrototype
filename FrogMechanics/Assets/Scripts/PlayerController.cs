@@ -9,11 +9,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
     public static int totalArtifacts;
+    public static int totalLives;
+    public static bool hasDied;
+    public VectorValue playerStorage;       //holds the VectorValue asset found in assets, at the moment in scripts
 
     [Header("Menu Stuff Here!")]
     public static bool GameIsPaused = false;    //Place to hold status if game is paused
@@ -25,6 +29,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     {
         Grounded,                       //Froskr is on the ground
         InAir,                          //Froskr is in the air
+        Floating,
     }
 
     public PlayerInput input;           //Place to call inputActions
@@ -54,12 +59,14 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     public float GravityAmt;                    //The pull of "local/world" gravity
     public float GravityBuildSpeed;             //How quickly Froskr builds gravity speed
     private float ActGravAmt;                   //The actual gravity applied to Froskr at the moment
+    IEnumerator floating;// = Floating();
 
     public LayerMask WallStick;                 //What layers the ground can be
     public float GravityRotationSpeed = 10f;    //How fast Froskr rotates to a new gravity direction
 
     [Header("Stats")]
     public float Speed = 15f;                   //Max speed for basic movement
+    float Spd;
     public float Acceleration = 4f;             //Acceleration to Speed
     public float turnSpeed = 2f;                //Turning speed (no clipping but physcially turn)
     private Vector3 MovDirection;               //Direction Froskr moves
@@ -72,26 +79,26 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     private bool HasJumped;                     //Check if Froskr has jumped
 
     [Header("Audio")]
-    public AudioSource audioSource;             //Assign an audio source, can be Froskr himself
-    public AudioClip walking;                   //To hold walking audio clip, dragged from assets
-
-
-
-
+    public AudioSource walkingSound;             //Assign an audio source, can be Froskr himself
+    //public AudioClip walking;                   //To hold walking audio clip, dragged from assets
 
     //***********GARY************* lives stuff
 
     public Text livesText;
 
     public GameObject loseScreen;
+    Vector3 playerPosition;          //position you want the player to be in the next scene
 
-    public int lives = 10;
-   // public float maxLives;
+    //public int lives = 10;
+    // public float maxLives;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerPosition = new Vector3(60.72f, 30.292f, -162.07f);
+        totalLives = 10;//******************************
+
         Debug.Log(totalArtifacts);
 
         Rigid = GetComponentInChildren<Rigidbody>();    //Get sphere rigidbody
@@ -110,9 +117,10 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         canMove = true;                                                     //Player can move right away
         Rigid.transform.position = startingPosition.initalValue;            //Set player to position according to scene
 
+        floating = Floating();
 
         //************GARY******** lives
-      //  maxLives = lives; //sets max lives to lives
+        //  maxLives = lives; //sets max lives to lives
 
     }
 
@@ -191,6 +199,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         //Check if Froskr is grappeling
         if (grappeling)
         {
+            walkingSound.Pause();
             Rigid.position = transform.position;    //sphere follows Froskr 
             SetInAir();                             //Set Froskr's state to inAir
             FallingCtrl(delta, Speed, Acceleration);//Call method FallingCtrl
@@ -204,22 +213,45 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             //animator.SetInteger("State", 2);
         }
 
-
+        if (hasDied == true)
+        {
+            Rigid.transform.position = startingPosition.initalValue;            //Set player to position according to scene
+            hasDied = false;
+            walkingSound.Pause();
+        }
         //**********GARY******** lives stuff
 
-        livesText.text = " x " + lives;
-        
+        livesText.text = " x " + totalLives;
+        if (totalLives <= 0)
+        {
+            Spd = 0;
+            Debug.Log("I DIeD XP");
+            loseScreen.SetActive(true);
+            
+            if (Input.anyKey)
+            {
+                playerStorage.initalValue = playerPosition; //sets the player's position for the next scene
+                SceneManager.LoadScene(1);              //loads the new scene
+            }
+        }
+
+        if (Spd == 0)
+            walkingSound.Pause();
+        else
+            walkingSound.UnPause();
+        //Debug.Log(States);
     }
 
-    void OnTriggerEnter(Collider collider)
+    /*void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.tag == "Kill")
+        Debug.Log("Entered something...might kill me");
+        if (collider.gameObject.tag == "Kill")
         {
             Debug.Log("fuck you");
             lives -= 1;
-            
+
         }
-    }
+    }*/
 
 
 
@@ -231,6 +263,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         //If Froskr is not allowed to move (due to talking), motion values set to zero
         if (!canMove)
         {
+            walkingSound.Pause();
             motion.x = 0;
             motion.y = 0;
         }
@@ -240,14 +273,13 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         //If Froskr is on the ground
         if (States == WorldState.Grounded)
         {
-            float Spd = Speed;              //Make a variable to hold Froskr's current speed, set Froskr's speed to normal
+            Spd = Speed;              //Make a variable to hold Froskr's current speed, set Froskr's speed to normal
 
             //If player is not trying to move Froskr
             if (motion.x == 0 && motion.y == 0)
             {
                 Spd = 0f;                   //Set Froskr's speed to zero
             }
-
 
             MoveSelf(delta, Spd, Acceleration); //Call method MoveSelf to move Froskr accordingly
 
@@ -258,6 +290,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             if (!Ground)
             {
                 SetInAir();     //Set Froskr's state to inAir
+                Debug.Log("Set in air was called");
                 return;         //return now so we don't accidently go into the else if statement below
             }
 
@@ -270,9 +303,24 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             if (HasJumped)
                 return;     //only return when jump time is done
 
-            FallingCtrl(delta, Speed, Acceleration);        //When jump time done, call method FallingCtrl
+            if (States != WorldState.Floating)
+                FallingCtrl(delta, Speed, Acceleration);        //When jump time done, call method FallingCtrl
 
             //Check if Froskr hit the ground
+            bool Ground = Colli.CheckGround(-GroundDir);
+
+            //If Froskr hit the ground
+            if (Ground)
+            {
+                Rigid.useGravity = false;   //Don't use local world gravity anymore
+                SetGrounded();              //Set Froskr's state to ground
+                animator.SetInteger("State", 0);
+                return;
+            }
+        }
+
+        else if (States == WorldState.Floating)
+        {
             bool Ground = Colli.CheckGround(-GroundDir);
 
             //If Froskr hit the ground
@@ -292,12 +340,26 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         ActGravAmt = 5f; //our gravity is returned to normal
 
         States = WorldState.Grounded;
+        walkingSound.UnPause();
     }
 
     //Transition Froskr to the air
     public void SetInAir()
     {
+        walkingSound.Pause();
         States = WorldState.InAir;
+        if (!grappeling)
+        {
+            StopCoroutine(floating);
+            StartCoroutine(floating);
+        }
+    }
+
+    //Transition Froskr to the air
+    public void SetFloating()
+    {
+        walkingSound.Pause();
+        States = WorldState.Floating;
     }
 
     //Froskr jumps up
@@ -315,6 +377,23 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         HasJumped = false;
         Rigid.useGravity = true;
     }
+
+    //***********************************************
+    IEnumerator Floating()
+    {
+        yield return new WaitForSecondsRealtime(5.0f);
+        if (States != WorldState.Grounded)
+        {
+            Debug.Log("Floating started");
+            SetFloating();
+            GroundDir = transform.up;
+            Rigid.useGravity = true;
+            FallingCtrl(delta, 100, 100);
+        }
+        //Physics.gravity.x = gravitySpeed;
+        //verticalVelocity += Physics.gravity.y * Time.deltaTime;
+    }
+    //************************************************
 
     //Check the angle of the floor Froskr is standing on
     Vector3 FloorAngleCheck()

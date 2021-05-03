@@ -8656,20 +8656,20 @@ Transform:
   - {fileID: 50398619}
   - {fileID: 865417316}
   - {fileID: 1924752185}
+  - {fileID: 482321075}
   - {fileID: 1627575377}
   - {fileID: 209788034}
   - {fileID: 1127787210}
   - {fileID: 388266639}
   - {fileID: 172878656}
+  - {fileID: 1397161126}
   - {fileID: 1397478026}
+  - {fileID: 1900813636}
   - {fileID: 1061698013}
-  - {fileID: 482321075}
+  - {fileID: 827594465}
   - {fileID: 472399944}
   - {fileID: 1815845953}
-  - {fileID: 1397161126}
-  - {fileID: 1900813636}
   - {fileID: 2143911456}
-  - {fileID: 827594465}
   - {fileID: 2138882157}
   - {fileID: 480019960}
   - {fileID: 1145141971}
@@ -27725,6 +27725,10 @@ PrefabInstance:
       propertyPath: walking
       value: 
       objectReference: {fileID: 8300000, guid: 36b5b255975d408429082a0fd24868b5, type: 3}
+    - target: {fileID: 6841950722832144222, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
+      propertyPath: playerStorage
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
     - target: {fileID: 6841950724079840606, guid: d804d58f6aeb9ce44a0ec22805ce3b8e, type: 3}
       propertyPath: TargetController
       value: 
