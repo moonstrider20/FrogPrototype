@@ -33,6 +33,7 @@ public class TextBox : MonoBehaviour
     //public Image unknown;
     public Image frog;
 
+    public GameObject lives;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,7 @@ public class TextBox : MonoBehaviour
 
         //theText.text = textLines[currentLine];
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 2"))
         {
             if (!isTyping)
             {
@@ -143,6 +144,8 @@ public class TextBox : MonoBehaviour
         textBox.SetActive(true);
         isActive = true;
 
+        lives.SetActive(false);
+
         //if(stopPlayerMovement)
         //{
         player.canMove = false;
@@ -154,6 +157,8 @@ public class TextBox : MonoBehaviour
     {
         textBox.SetActive(false);
         isActive = false;
+
+        lives.SetActive(true);
 
         player.canMove = true;
     }

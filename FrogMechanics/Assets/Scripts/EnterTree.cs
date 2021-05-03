@@ -8,6 +8,9 @@ public class EnterTree : MonoBehaviour
     void Start()
     {
         if (PlayerController.totalArtifacts >= 3)
+        {
+            Debug.Log("DeStRoY");
             Destroy(gameObject);
+        }
     }
 }

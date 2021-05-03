@@ -108,8 +108,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     // Start is called before the first frame update
     void Start()
     {
-        //totalArtifacts = 3;
-
         if(pizzaArt)
         {
             pizza.enabled = true;
@@ -266,9 +264,10 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         if (totalLives <= 0)
         {
             Spd = 0;
-            Debug.Log("I DIeD XP");
             loseScreen.SetActive(true);
             
+
+            //CAN USE THIS IF STATEMENT FOR RETURNING TO HUB AS WELL
             if (Input.anyKey)
             {
                 playerStorage.initalValue = playerPosition; //sets the player's position for the next scene
@@ -282,20 +281,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             walkingSound.UnPause();
         //Debug.Log(States);
     }
-
-    /*void OnTriggerEnter(Collider collider)
-    {
-        Debug.Log("Entered something...might kill me");
-        if (collider.gameObject.tag == "Kill")
-        {
-            Debug.Log("fuck you");
-            lives -= 1;
-
-        }
-    }*/
-
-
-
 
     //FixedUpdate is called any number of times per frame depending on framerate
     //Good for movement/physics

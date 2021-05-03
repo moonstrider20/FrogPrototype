@@ -8,12 +8,13 @@ public class FinalWin : MonoBehaviour
 
     public GameObject WinScreen;
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-       if (PlayerController.totalArtifacts == 3)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            WinScreen.SetActive(true);
-        }
+        if (other.name == "RigidCollider")      //Checks if it is the player
+            if (PlayerController.totalArtifacts == 3)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                WinScreen.SetActive(true);
+            }
     }
 }

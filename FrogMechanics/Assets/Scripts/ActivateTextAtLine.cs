@@ -32,7 +32,7 @@ public class ActivateTextAtLine : MonoBehaviour
     {
         //Check if object is allowing player to press a key and if the key is pressed
         //Can change what button to press to initaite talking here, right now it is E
-        if (waitForPress && Input.GetKeyDown(KeyCode.E))
+        if (waitForPress && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 2")))
         {
             theTextBox.ReloadScript(theText);       //loads the appropriate .txt file
             theTextBox.currentLine = startLine;     //assigns the starting line
