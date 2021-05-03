@@ -207,7 +207,7 @@
                 {
                     "name": "LeftAna",
                     "id": "7e398011-a03a-4289-879b-58969b51f5bf",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -421,15 +421,59 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6c168cdd-6a77-46b8-b48e-d5923c942c94",
-                    "path": "<Gamepad>/rightStick",
+                    "name": "RightAna",
+                    "id": "d82c7226-f981-4fba-9943-d99b73ce1bd7",
+                    "path": "2DVector(mode=2)",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=10,y=10)",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "dc3efa48-e9d0-4e1d-984c-495f703e8132",
+                    "path": "<XInputController>/rightStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Xbox",
+                    "groups": "",
                     "action": "Look",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "73faa78b-1973-4783-a0ac-4dcac7559fbd",
+                    "path": "<XInputController>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "4eaaec01-aaa8-4f81-a8cf-5410c41e949c",
+                    "path": "<XInputController>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "d726de65-1953-4224-b398-3177b3d9da6d",
+                    "path": "<XInputController>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

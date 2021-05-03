@@ -19,6 +19,6 @@ A: (so mysterious!)
 F: Ribbit?
 R: I require a slice, of the finest Yew Nork pie.
 D: GET ME A STRAWBERRY, AND DONT DUCK IT UP!
-R: I like shiny rocks! (so pretty!)
+A: I like shiny rocks! (so pretty!)
 R: Bestow upon us our wishes three, and you may climb our tree.
 A: (bars!)

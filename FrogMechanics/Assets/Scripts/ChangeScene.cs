@@ -27,7 +27,7 @@ public class ChangeScene : MonoBehaviour
     public int artifactTotal;               //Enter number of artifacts required to enter
 
     //Checks if something entered the "portal"
-    void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.name == "RigidCollider")  //checks if it is the player
         {
@@ -74,4 +74,15 @@ public class ChangeScene : MonoBehaviour
             SceneManager.LoadScene(scene);              //loads the new scene
         }
     }
+
+
+    public void HubReturn()
+    {
+        playerStorage.initalValue = playerPosition; //sets the player's position for the next scene
+        SceneManager.LoadScene(scene);              //loads the new scene
+        Time.timeScale = 1f;                        //Resume time
+       // GameIsPaused = false;                       //Game no longer paused
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
 }
