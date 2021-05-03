@@ -15511,16 +15511,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 537661717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &537661719
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17686,16 +17679,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 665883061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &665883063
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18663,16 +18649,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 711800669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &711800671
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18932,16 +18911,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 717110735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &717110737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23798,16 +23770,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 947584066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &947584068
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26551,16 +26516,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1065247509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &1065247511
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34030,16 +33988,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1439664903}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &1439664905
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42882,16 +42833,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774728374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &1774728376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46895,16 +46839,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1923548139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &1923548141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52015,16 +51952,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2135573501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92859bb0cbb08341b7328175c1c82f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 737a0e667e7e7b644be77efbdc68d2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 3
-  playerPosition: {x: -1346.6, y: -5203.67, z: -10882.5}
-  playerStorage: {fileID: 11400000, guid: 1f4a579979f1536498c8a8f5e9543eb6, type: 2}
-  artifactFound: 0
-  artifactNumber: 0
-  requiresArtifact: 0
-  artifactTotal: 0
 --- !u!65 &2135573503
 BoxCollider:
   m_ObjectHideFlags: 0

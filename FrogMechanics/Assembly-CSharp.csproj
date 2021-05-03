@@ -80,6 +80,7 @@
      <Compile Include="Assets\Scripts\GameOver.cs" />
      <Compile Include="Assets\Scripts\VectorValue.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
+     <Compile Include="Assets\Scripts\ChangeTextFile.cs" />
      <None Include="Assets\Talking.txt" />
      <None Include="Assets\dialogue\FroskrScript.txt" />
  <Reference Include="Unity.Timeline.Editor">
