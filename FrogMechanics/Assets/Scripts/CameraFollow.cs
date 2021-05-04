@@ -100,8 +100,8 @@ public class CameraFollow : MonoBehaviour, PlayerInput.ICameraActions
 
     public void Tick(float d)
     {
-        float h = Input.GetAxis("Mouse X");
-        float v = Input.GetAxis("Mouse Y");
+        float h = Input.GetAxis("Mouse X") + Input.GetAxis("RightH");
+        float v = Input.GetAxis("Mouse Y") + Input.GetAxis("RightV");
         float rotateSpeed = MouseSpeed;
 
         HandleRotation(d, v, h, rotateSpeed);

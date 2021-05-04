@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             {
                 Rigid.useGravity = false;   //Don't use local world gravity anymore
                 SetGrounded();              //Set Froskr's state to ground
-                animator.SetInteger("State", 0);
+                animator.SetInteger("State", 3);
                 return;
             }
         }
@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
             {
                 Rigid.useGravity = false;   //Don't use local world gravity anymore
                 SetGrounded();              //Set Froskr's state to ground
-                animator.SetInteger("State", 0);
+                animator.SetInteger("State", 3);
                 return;
             }
         }
@@ -398,7 +398,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         //Good coding practice
         if (UpwardsAmt != 0)
             Rigid.AddForce((transform.up * UpwardsAmt), ForceMode.Impulse);     //Froskr jumps
-
+        animator.SetInteger("State", 2);
         yield return new WaitForSecondsRealtime(0.3f);
         HasJumped = false;
         Rigid.useGravity = true;

@@ -1,11 +1,14 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - ActivateTextAtLine
     - CameraFollow
     - ChangeScene
     - DetectCollision
+    - EnterTree
     - FinalWin
     - GameOver
+    - KillPlayer
     - MainMenu
     - PlayerController
     - Quit
@@ -13,9 +16,11 @@ ScriptsOnlyBuild:
     - SoftReset
     - TargetController
     - TargetInView
+    - TextBox
     - Tongue
     - VectorValue
     Unity.InputSystem.dll:
+    - UnityEngine.InputSystem.InputActionAsset
     - UnityEngine.InputSystem.InputSettings
     - UnityEngine.InputSystem.InputSystemObject
     - UnityEngine.InputSystem.RemoteInputPlayerConnection
@@ -40,6 +45,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/FungalForest.unity:
     - Class: 1
@@ -85,40 +91,46 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 11720}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 11782}
+      Script: {instanceID: 11700}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 11726}
     - Class: 114
-      Script: {instanceID: 12034}
+      Script: {instanceID: 11788}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 13020}
+      Script: {instanceID: 12038}
     - Class: 114
-      Script: {instanceID: 13110}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13236}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13564}
+      Script: {instanceID: 13032}
     - Class: 114
-      Script: {instanceID: 13744}
+      Script: {instanceID: 13122}
     - Class: 114
-      Script: {instanceID: 13812}
+      Script: {instanceID: 13576}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13756}
     - Class: 114
-      Script: {instanceID: 13994}
+      Script: {instanceID: 13826}
     - Class: 114
-      Script: {instanceID: 14330}
+      Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 14008}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 14344}
+    - Class: 114
+      Script: {instanceID: 14436}
+    - Class: 114
+      Script: {instanceID: 14466}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 134
       Script: {instanceID: 0}
@@ -129,6 +141,12 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
+    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -157,6 +175,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
     - Class: 64
@@ -182,40 +202,52 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 11720}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 11782}
+      Script: {instanceID: 11700}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 11726}
     - Class: 114
-      Script: {instanceID: 12034}
+      Script: {instanceID: 11788}
     - Class: 114
-      Script: {instanceID: 12556}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 12038}
     - Class: 114
-      Script: {instanceID: 13020}
+      Script: {instanceID: 12404}
     - Class: 114
-      Script: {instanceID: 13110}
+      Script: {instanceID: 12562}
     - Class: 114
-      Script: {instanceID: 13236}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13564}
+      Script: {instanceID: 13032}
     - Class: 114
-      Script: {instanceID: 13744}
+      Script: {instanceID: 13122}
     - Class: 114
-      Script: {instanceID: 13812}
+      Script: {instanceID: 13324}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13576}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 13710}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 13756}
     - Class: 114
-      Script: {instanceID: 786234}
+      Script: {instanceID: 13826}
+    - Class: 114
+      Script: {instanceID: 13880}
+    - Class: 114
+      Script: {instanceID: 13948}
+    - Class: 114
+      Script: {instanceID: 14008}
+    - Class: 114
+      Script: {instanceID: 14436}
+    - Class: 114
+      Script: {instanceID: 14466}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 134
       Script: {instanceID: 0}
@@ -227,7 +259,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
-    - Class: 212
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -263,17 +297,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 11720}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 11726}
     - Class: 114
-      Script: {instanceID: 13236}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13484}
+      Script: {instanceID: 13496}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 14436}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -332,32 +366,44 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 11720}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 11782}
+      Script: {instanceID: 11700}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 11726}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 11788}
     - Class: 114
-      Script: {instanceID: 13020}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 13110}
+      Script: {instanceID: 12038}
     - Class: 114
-      Script: {instanceID: 13564}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13744}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13812}
+      Script: {instanceID: 13032}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13122}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 13576}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 13756}
+    - Class: 114
+      Script: {instanceID: 13826}
+    - Class: 114
+      Script: {instanceID: 13948}
+    - Class: 114
+      Script: {instanceID: 14008}
+    - Class: 114
+      Script: {instanceID: 14436}
+    - Class: 114
+      Script: {instanceID: 14466}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 134
       Script: {instanceID: 0}
@@ -369,6 +415,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
+      Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
     - Class: 222
@@ -377,7 +427,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 224
       Script: {instanceID: 0}
-    Assets/Scenes/StarlightSwinging.unity:
+    Assets/Scenes/V2StarlightSwinging 1.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -421,32 +471,44 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11696}
     - Class: 114
-      Script: {instanceID: 11720}
+      Script: {instanceID: 11698}
     - Class: 114
-      Script: {instanceID: 11782}
+      Script: {instanceID: 11700}
     - Class: 114
-      Script: {instanceID: 11916}
+      Script: {instanceID: 11726}
     - Class: 114
-      Script: {instanceID: 12596}
+      Script: {instanceID: 11788}
     - Class: 114
-      Script: {instanceID: 13020}
+      Script: {instanceID: 11922}
     - Class: 114
-      Script: {instanceID: 13110}
+      Script: {instanceID: 12038}
     - Class: 114
-      Script: {instanceID: 13564}
+      Script: {instanceID: 12604}
     - Class: 114
-      Script: {instanceID: 13744}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13812}
+      Script: {instanceID: 13032}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13122}
     - Class: 114
-      Script: {instanceID: 14422}
+      Script: {instanceID: 13576}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 13756}
+    - Class: 114
+      Script: {instanceID: 13826}
+    - Class: 114
+      Script: {instanceID: 13948}
+    - Class: 114
+      Script: {instanceID: 14008}
+    - Class: 114
+      Script: {instanceID: 14436}
+    - Class: 114
+      Script: {instanceID: 14466}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 134
       Script: {instanceID: 0}
@@ -457,6 +519,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -469,10 +535,28 @@ ScriptsOnlyBuild:
   scriptHashData:
   - hash:
       serializedVersion: 2
+      Hash: f087c23fbfa15475a0d110af46fb0496
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
+  - hash:
+      serializedVersion: 2
       Hash: a6e561615949734e9f12f9b61661f43e
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Image
+  - hash:
+      serializedVersion: 2
+      Hash: 699619b86d9359741a4f58540298c80b
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Text
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FungalReset
   - hash:
       serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
@@ -545,12 +629,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 699619b86d9359741a4f58540298c80b
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Text
   - hash:
       serializedVersion: 2
       Hash: fd8b23ad3c9e81bc85b197495bc510ac
@@ -685,6 +763,12 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 20cb24e2b3a8bd6de9d59a45e1971d70
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FinalWin
+  - hash:
+      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -707,6 +791,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SoftReset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CityReset
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -769,10 +859,22 @@ ScriptsOnlyBuild:
     className: InputActionImporterEditor
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CaveReset
+  - hash:
+      serializedVersion: 2
       Hash: 287a4aa7392bcfb309b4d7b4dc89eb3c
     assemblyName: Unity.InputSystem.dll
     namespaceName: UnityEngine.InputSystem.Editor
     className: PlayerInputEditor
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: KillPlayer
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
@@ -853,12 +955,6 @@ ScriptsOnlyBuild:
     className: HIDDescriptorWindow
   - hash:
       serializedVersion: 2
-      Hash: f087c23fbfa15475a0d110af46fb0496
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
-  - hash:
-      serializedVersion: 2
       Hash: c1d728126ff1918728036c59106d32b2
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -869,6 +965,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.InputSystem.dll
     namespaceName: 
     className: DownloadableSample
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnterTree
   - hash:
       serializedVersion: 2
       Hash: 5d5b0c61f3ab6ff5f41b1bbe19764526
@@ -931,7 +1033,7 @@ ScriptsOnlyBuild:
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
-      Hash: 50a66d100b91d25493fb9b1d82b34e25
+      Hash: 1e5552b7d865e585bb62b908110a1a1f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -973,6 +1075,12 @@ ScriptsOnlyBuild:
     className: CameraFollow
   - hash:
       serializedVersion: 2
+      Hash: dfdbbaaca2cc47b32a1c2d4445a241b7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChangeTextFile
+  - hash:
+      serializedVersion: 2
       Hash: 76aef43e801605d1829c8805eeee135c
     assemblyName: Unity.InputSystem.dll
     namespaceName: UnityEngine.InputSystem
@@ -997,7 +1105,7 @@ ScriptsOnlyBuild:
     className: Win
   - hash:
       serializedVersion: 2
-      Hash: fdce63ff8139b66ab16ff80d20b8c807
+      Hash: 128bfa117f675ba60491e8e469f8ad88
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TextBox
@@ -1021,7 +1129,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 2127de2a04e1b23cc46e595468f9e4ab
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Restart
@@ -1163,36 +1271,11 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 20cb24e2b3a8bd6de9d59a45e1971d70
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FinalWin
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FungalReset
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CaveReset
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CityReset
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/GodTreeHub.unity
   - Assets/Scenes/FungalForest.unity
   - Assets/Scenes/ProblematicPermafrost.unity
-  - Assets/Scenes/StarlightSwinging.unity
-  playerPath: C:/Users/Alex/Desktop/Spring 2021 Semester/GameProd/GP3/Digital Milestone
-    3/FrogMechanics.exe
+  - Assets/Scenes/V2StarlightSwinging 1.unity
+  playerPath: C:/Users/Alex/Desktop/Spring 2021 Semester/GameProd/GP3/Final Build/FrogMechanics.exe

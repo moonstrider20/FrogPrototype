@@ -8523,6 +8523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: strawberry Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 499671366201628828, guid: be029c206c0f24746a446d974616c244, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 983157842700763686, guid: be029c206c0f24746a446d974616c244, type: 3}
       propertyPath: m_LocalPosition.x
       value: 84.63051
@@ -23277,6 +23281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pizza box Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7990964691579023575, guid: 169311b473b13bd47b8c26bae705cc3c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 169311b473b13bd47b8c26bae705cc3c, type: 3}
 --- !u!1 &1695840384
@@ -29705,6 +29713,10 @@ PrefabInstance:
     - target: {fileID: 1657744525200454453, guid: 4d97e988cc5f12340a8e2d94398f2ff9, type: 3}
       propertyPath: m_Name
       value: mcguffin rock Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657744525200454453, guid: 4d97e988cc5f12340a8e2d94398f2ff9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2038632479134034319, guid: 4d97e988cc5f12340a8e2d94398f2ff9, type: 3}
       propertyPath: m_LocalPosition.x
